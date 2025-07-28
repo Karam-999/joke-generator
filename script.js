@@ -34,46 +34,34 @@ const theJoke = () => {
   karam.open('GET', 'https://official-joke-api.appspot.com/random_joke');
 
   karam.onreadystatechange = function () {
-    if (this.readyState === 4) {
-      if (this.status === 200) {
-        // console.log(JSON.parse(this.responseText).value);
-        // joke.innerHTML =
-        //   JSON.parse(this.responseText).setup +
-        //   ' - ' +
-        //   JSON.parse(this.responseText).punchline;
-        console.log(this.readyState);
-        console.log(this.status);
-        // console.log(
-        //   `${JSON.parse(this.responseText).setup}-${
-        //     JSON.parse(this.responseText).punchline
-        //   }`
-        // );
-        joker.innerHTML = JSON.parse(this.responseText).setup;
+    if (this.readyState === 4 && this.status === 200) {
+      const response = JSON.parse(this.responseText);
 
-        setTimeout(() => {
-          // joker.innerHTML =
-          // JSON.parse(this.responseText).setup +
-          // ' - ' +
-          punchln = document.createElement('div');
-          punchln.innerHTML = JSON.parse(this.responseText).punchline + ' 😂 ';
-          joker.appendChild(punchln);
-          punchln.style.backgroundColor = '#b7ffabff';
-        }, 3000);
-        // addJokeToThePage();
-      } else {
-        console.log('what is this?');
-      }
+      // Clear previous joke
+      joker.innerHTML = '';
+
+      // Create and insert setup
+      const setupEl = document.createElement('p');
+      setupEl.textContent = response.setup;
+      joker.appendChild(setupEl);
+
+      // Create and insert punchline after delay
+      setTimeout(() => {
+        const punchlineEl = document.createElement('p');
+        punchlineEl.textContent = response.punchline + ' 😂';
+        punchlineEl.style.backgroundColor = '#b0ffb0';
+        punchlineEl.style.display = 'inline-block';
+        punchlineEl.style.padding = '5px 10px';
+        punchlineEl.style.borderRadius = '5px';
+        punchlineEl.style.marginTop = '10px';
+
+        joker.appendChild(punchlineEl);
+      }, 3000);
     }
   };
+
   karam.send();
 };
-// function addJokeToThePage() {
-//   joke.innerHTML =
-//     JSON.parse(this.responseText).setup +
-//     '-' +
-//     JSON.parse(this.responseText).punchline;
-// }
-// joke.appendChild(joke);
 
 jokeButn.addEventListener('click', theJoke);
 document.addEventListener('DOMContentLoaded', theJoke);
