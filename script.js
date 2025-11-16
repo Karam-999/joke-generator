@@ -54,6 +54,8 @@ const theJoke = () => {
         punchlineEl.style.padding = '5px 10px';
         punchlineEl.style.borderRadius = '5px';
         punchlineEl.style.marginTop = '10px';
+        punchlineEl.style.maxWidth = '100%';
+        punchlineEl.style.wordWrap = 'break-word';
 
         joker.appendChild(punchlineEl);
       }, 3000);
